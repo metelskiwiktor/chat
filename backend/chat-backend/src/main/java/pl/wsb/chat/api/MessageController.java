@@ -1,6 +1,5 @@
 package pl.wsb.chat.api;
 
-
 import org.springframework.web.bind.annotation.*;
 import pl.wsb.chat.domain.message.Message;
 import pl.wsb.chat.domain.message.MessageRepository;
