@@ -1,10 +1,10 @@
 package pl.wsb.chat.api;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+        import org.springframework.web.bind.annotation.GetMapping;
+        import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+        import java.time.LocalDateTime;
+        import java.time.format.DateTimeFormatter;
 
 @RestController
 public class MockController {
