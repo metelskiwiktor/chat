@@ -14,8 +14,8 @@ public class Message {
     public Message() {
     }
 
-    public Message(String notes, LocalDateTime date) {
-        this.note = notes;
+    public Message(String note, LocalDateTime date) {
+        this.note = note;
         this.date = date;
     }
 
@@ -47,7 +47,7 @@ public class Message {
     public String toString() {
         return "Message{" +
                 "id=" + id +
-                ", notes='" + note + '\'' +
+                ", note='" + note + '\'' +
                 ", date=" + date +
                 '}';
     }
