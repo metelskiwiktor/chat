@@ -10,7 +10,6 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import java.io.IOException;
 
 @Configuration
-
 public class MongoDBConfig {
     private static final String MONGO_DB_URL = "localhost";
     private static final String MONGO_DB_NAME = "embedded_db";

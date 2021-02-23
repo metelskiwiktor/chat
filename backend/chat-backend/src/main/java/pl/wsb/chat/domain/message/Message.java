@@ -3,10 +3,8 @@ package pl.wsb.chat.domain.message;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.time.Clock;
 import java.time.LocalDateTime;
-import java.util.Date;
+
 
 @Document
 public class Message {

@@ -17,12 +17,12 @@ public class MessageController {
         this.messageRepository = messageRepository;
     }
 
-    @GetMapping("list")
+    @GetMapping("/list")
     public List<Message> getMessage() {
         return messageRepository.findAll();
     }
 
-    @PostMapping("save")
+    @PostMapping("/save")
     public List<Message> saveMessage(@RequestBody Message message) {
         message.setDate(LocalDateTime.now());
         messageRepository.save(message);
