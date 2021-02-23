@@ -4,20 +4,22 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.Clock;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Document
 public class Message {
     @Id
     private ObjectId id;
-    private String notes;
-    private Date date;
+    private String note;
+    private LocalDateTime date;
 
     public Message() {
     }
 
-    public Message(String notes, Date date) {
-        this.notes = notes;
+    public Message(String notes, LocalDateTime date) {
+        this.note = notes;
         this.date = date;
     }
 
@@ -29,19 +31,19 @@ public class Message {
         this.id = id;
     }
 
-    public String getNotes() {
-        return notes;
+    public String getNote() {
+        return note;
     }
 
-    public void setNotes(String notes) {
-        this.notes = notes;
+    public void setNote(String note) {
+        this.note = note;
     }
 
-    public Date getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 
@@ -49,7 +51,7 @@ public class Message {
     public String toString() {
         return "Message{" +
                 "id=" + id +
-                ", notes='" + notes + '\'' +
+                ", notes='" + note + '\'' +
                 ", date=" + date +
                 '}';
     }
