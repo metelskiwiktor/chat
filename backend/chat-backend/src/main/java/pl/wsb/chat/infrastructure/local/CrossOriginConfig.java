@@ -12,7 +12,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class CrossOriginConfig {
     @Bean
     public WebMvcConfigurer corsConfigurer(@Value("${local.frontend.host}") final String localFrontendHost) {
-        System.out.println(localFrontendHost);
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
