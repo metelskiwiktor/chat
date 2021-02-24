@@ -17,14 +17,14 @@ public class MessageController {
     }
 
     @GetMapping("/list")
-    public List<Message> getMessage() {
+    public List<Message> getMessages() {
         return messageRepository.findAll();
     }
 
     @PostMapping("/save")
-    public List<Message> saveMessage(@RequestBody Message message) {
+    public Message saveMessage(@RequestBody Message message) {
         message.setDate(LocalDateTime.now());
         messageRepository.save(message);
-        return messageRepository.findAll();
+        return message;
     }
 }

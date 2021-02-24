@@ -8,7 +8,7 @@ import java.time.format.DateTimeFormatter;
 @RestController
 public class MockController {
 
-    @GetMapping("/")
+    @GetMapping("/mock")
     public String getDate(){
         return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
