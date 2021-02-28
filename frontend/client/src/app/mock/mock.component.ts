@@ -6,8 +6,10 @@ import {HttpMockService} from '../http-mock.service';
   templateUrl: './mock.component.html',
   styleUrls: ['./mock.component.css']
 })
+
 export class MockComponent implements OnInit {
   date = '';
+
   constructor(private httpMock: HttpMockService) {
   }
 
