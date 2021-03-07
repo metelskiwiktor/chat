@@ -2,9 +2,127 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <link rel="stylesheet" href="rooms.component.scss" type="text/css"/>
   <title>Title</title>
 </head>
 <body>
-<h1>Rooms Works Correctly</h1>
+
+
+<div class="container clearfix">
+
+  <div class="people-list" id="people-list">
+    <ul class="list">
+
+      <li class="clearfix">
+        <div class="about">
+          <div class="name">Pokój nr 1</div>
+        </div>
+      </li>
+
+      <li class="clearfix">
+        <div class="about">
+          <div class="name">Pokój nr 2</div>
+
+        </div>
+      </li>
+
+      <li class="clearfix">
+        <div class="about">
+          <div class="name">Pokój nr 3</div>
+
+        </div>
+      </li>
+
+      <li class="clearfix">
+        <div class="about">
+          <div class="name">Pokój nr 4</div>
+
+        </div>
+      </li>
+
+      <li class="clearfix">
+        <div class="about">
+          <div class="name">Pokój nr 5</div>
+
+        </div>
+      </li>
+
+      <li class="clearfix">
+        <div class="about">
+          <div class="name">Pokój nr 6</div>
+
+        </div>
+      </li>
+
+      <li class="clearfix">
+        <div class="about">
+          <div class="name">Pokój nr 7</div>
+
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="chat">
+    <div class="chat-header clearfix">
+
+      <div class="chat-about">
+        <div class="chat-with">Uwtórz nowy pokój rozmów:</div>
+        <div class="dropdown">
+          <button id="myBtn" class="dropbtn">Utwórz</button>
+          <div id="myDropdown" class="dropdown-content">
+            <form>
+              Nazwa pokoju:
+              <input type="text"> <br> <br>
+              <input type="submit" value="stworz">
+            </form>
+          </div>
+        </div>
+
+      </div>
+      <i class="fa fa-star"></i>
+    </div> <!-- end chat-header -->
+
+
+
+
+
+  </div> <!-- end chat -->
+
+</div> <!-- end container -->
+
+<script id="message-template" type="text/x-handlebars-template">
+  <li class="clearfix">
+    <div class="message-data align-right">
+      <span class="message-data-time">{{time}}, dzisiaj</span> &nbsp; &nbsp;
+      <span class="message-data-name">Olia</span> <i class="fa fa-circle me"></i>
+    </div>
+    <div class="message other-message float-right">
+      {{messageOutput}}
+    </div>
+  </li>
+</script>
+<script>
+  // Get the button, and when the user clicks on it, execute myFunction
+  document.getElementById("myBtn").onclick = function() {myFunction()};
+
+  /* myFunction toggles between adding and removing the show class, which is used to hide and show the dropdown content */
+  function myFunction() {
+    document.getElementById("myDropdown").classList.toggle("show");
+  }
+</script>
+<script id="message-response-template" type="text/x-handlebars-template">
+  <li>
+    <div class="message-data">
+      <span class="message-data-name"><i class="fa fa-circle online"></i> Vincent</span>
+      <span class="message-data-time">{{time}}, dzisiaj</span>
+    </div>
+    <div class="message my-message">
+      {{response}}
+    </div>
+  </li>
+</script>
+
+
 </body>
 </html>
