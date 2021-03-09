@@ -1,6 +1,8 @@
 package pl.wsb.chat.domain.user;
 
 import org.springframework.stereotype.Service;
+import pl.wsb.chat.domain.exception.DomainException;
+import pl.wsb.chat.domain.exception.ExceptionCode;
 
 @Service
 public class UserService {
@@ -11,9 +13,7 @@ public class UserService {
     }
 
     public User getById(String userId) {
-        return userRepository.findAll().stream()
-                .filter(user -> user.getId().equals(userId))
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("No such user found"));
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new DomainException(ExceptionCode.NO_SUCH_USER, userId));
     }
 }
