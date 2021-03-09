@@ -1,6 +1,9 @@
 package pl.wsb.chat.domain.room;
 
 import org.springframework.stereotype.Service;
+import pl.wsb.chat.domain.exception.DomainException;
+import pl.wsb.chat.domain.exception.ExceptionCode;
+import pl.wsb.chat.infrastructure.local.repository.RoomRepositoryLocal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +18,10 @@ public class RoomService {
     }
 
     public Room createRoom(String roomName) {
+        if(existRoomByName(roomName)) {
+            throw new DomainException(ExceptionCode.ROOM_ALREADY_EXIST, roomName);
+        }
+
         return roomRepository.save(new Room(
                 roomName,
                 new ArrayList<>()
@@ -43,9 +50,11 @@ public class RoomService {
     }
 
     public Room getRoomById(String roomId){
-        return roomRepository.findAll().stream()
-                .filter(room -> room.getId().equals(roomId))
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("No such room"));
+        return roomRepository.findById(roomId)
+                .orElseThrow(() -> new DomainException(ExceptionCode.NO_SUCH_ROOM, roomId));
+    }
+
+    public boolean existRoomByName(String roomName){
+        return roomRepository.existsByName(roomName);
     }
 }
