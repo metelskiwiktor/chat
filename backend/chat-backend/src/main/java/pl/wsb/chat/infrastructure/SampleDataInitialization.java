@@ -3,10 +3,11 @@ package pl.wsb.chat.infrastructure;
 import org.bson.types.ObjectId;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
-import pl.wsb.chat.domain.room.RoomMessage;
 import pl.wsb.chat.domain.pm.PrivateMessageRepository;
 import pl.wsb.chat.domain.room.Room;
+import pl.wsb.chat.domain.room.RoomMessage;
 import pl.wsb.chat.domain.room.RoomRepository;
 import pl.wsb.chat.domain.user.User;
 import pl.wsb.chat.domain.user.UserRepository;
@@ -14,6 +15,7 @@ import pl.wsb.chat.domain.user.UserRepository;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 
+@Profile("init")
 @Component
 public class SampleDataInitialization implements ApplicationRunner {
     private final PrivateMessageRepository privateMessageRepository;
@@ -28,7 +30,7 @@ public class SampleDataInitialization implements ApplicationRunner {
         this.userRepository = userRepository;
     }
 
-    private void saveSampleDataIfRepoEmpty(){
+    private void saveSampleDataIfRepoEmpty() {
         System.out.println("==============================\nSTARTING INITIALIZATION");
         int pmSize = privateMessageRepository.findAll().size();
         int rSize = roomRepository.findAll().size();
