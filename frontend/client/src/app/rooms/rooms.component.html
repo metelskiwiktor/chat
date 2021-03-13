@@ -1,107 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
   <meta charset="UTF-8">
-  <link rel="stylesheet" href="rooms.component.scss" type="text/css"/>
-  <title>Title</title>
+  <link rel="stylesheet" href="rooms.component.css" type="text/css"/>
+  <title>Rooms</title>
+
 </head>
 <body>
 
 
-<div class="container clearfix">
+<div id="container">
 
-  <div class="people-list" id="people-list">
-    <ul class="list">
+<div id="sidebar">
 
-      <li class="clearfix">
-        <div class="about">
-          <div class="name">Pokój nr 1</div>
-        </div>
+  <div class="room-list">
+    <ul style="list-style-type: none">
+
+      <li>
+        Wichi Wiktor
+      </li>
+      <li>
+        Marcin Łysy
+      </li>
+      <li>
+        Wejherowo Team
+      </li>
+      <li>
+        ZSET TEAM
+      </li>
+      <li>
+        Lebioda
+      </li>
+      <li>
+        MarcinRajan
+      </li>
+      <li>
+        BiałyStockTeam
+      </li>
+      <li>
+        DobreWariatyTeam
+      </li>
+      <li>
+        dawda
+      </li>
+      <li>
+        dawda
+      </li>
+      <li>
+        dawda
+      </li>
+      <li>
+        dawda
+      </li>
+      <li>
+        dawda
+      </li>
+      <li>
+        dawda
       </li>
 
-      <li class="clearfix">
-        <div class="about">
-          <div class="name">Pokój nr 2</div>
 
-        </div>
-      </li>
-
-      <li class="clearfix">
-        <div class="about">
-          <div class="name">Pokój nr 3</div>
-
-        </div>
-      </li>
-
-      <li class="clearfix">
-        <div class="about">
-          <div class="name">Pokój nr 4</div>
-
-        </div>
-      </li>
-
-      <li class="clearfix">
-        <div class="about">
-          <div class="name">Pokój nr 5</div>
-
-        </div>
-      </li>
-
-      <li class="clearfix">
-        <div class="about">
-          <div class="name">Pokój nr 6</div>
-
-        </div>
-      </li>
-
-      <li class="clearfix">
-        <div class="about">
-          <div class="name">Pokój nr 7</div>
-
-        </div>
-      </li>
     </ul>
+
   </div>
 
-  <div class="chat">
-    <div class="chat-header clearfix">
+</div>
 
-      <div class="chat-about">
-        <div class="chat-with">Uwtórz nowy pokój rozmów:</div>
-        <div class="dropdown">
-          <button id="myBtn" class="dropbtn">Utwórz</button>
-          <div id="myDropdown" class="dropdown-content">
-            <form>
-              Nazwa pokoju:
-              <input type="text"> <br> <br>
-              <input type="submit" value="stworz">
-            </form>
-          </div>
-        </div>
-
-      </div>
-      <i class="fa fa-star"></i>
-    </div> <!-- end chat-header -->
+  <script src="script.js"></script>
+<div class="dropdown">
+  <button id="myBtn" class="dropbtn">Stwórz pokój</button>
+  <div id="myDropdown" class="dropdown-content">
+<!--    <form action="/action_page.php">-->
+<!--      <label for="name">Nazwa pokoju:</label><br>-->
+<!--      <input type="text" id="fname" name="fname"><br>-->
+<!--      <input type="submit" value="Stwórz">-->
+<!--    </form>-->
+  </div>
+</div>
 
 
 
+</div>
 
-
-  </div> <!-- end chat -->
-
-</div> <!-- end container -->
-
-<script id="message-template" type="text/x-handlebars-template">
-  <li class="clearfix">
-    <div class="message-data align-right">
-      <span class="message-data-time">{{time}}, dzisiaj</span> &nbsp; &nbsp;
-      <span class="message-data-name">Olia</span> <i class="fa fa-circle me"></i>
-    </div>
-    <div class="message other-message float-right">
-      {{messageOutput}}
-    </div>
-  </li>
-</script>
 <script>
   // Get the button, and when the user clicks on it, execute myFunction
   document.getElementById("myBtn").onclick = function() {myFunction()};
@@ -111,18 +92,7 @@
     document.getElementById("myDropdown").classList.toggle("show");
   }
 </script>
-<script id="message-response-template" type="text/x-handlebars-template">
-  <li>
-    <div class="message-data">
-      <span class="message-data-name"><i class="fa fa-circle online"></i> Vincent</span>
-      <span class="message-data-time">{{time}}, dzisiaj</span>
-    </div>
-    <div class="message my-message">
-      {{response}}
-    </div>
-  </li>
-</script>
-
-
 </body>
+
+
 </html>
