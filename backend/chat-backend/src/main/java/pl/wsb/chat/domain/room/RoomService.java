@@ -13,6 +13,7 @@ import pl.wsb.chat.domain.exception.ExceptionCode;
 import pl.wsb.chat.domain.user.User;
 import pl.wsb.chat.domain.user.UserService;
 import pl.wsb.chat.lib.Assertion;
+import pl.wsb.chat.lib.BreakingCharactersUtils;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -33,6 +34,7 @@ public class RoomService {
     }
 
     public RoomView createRoom(String roomName) {
+        roomName = BreakingCharactersUtils.replace(roomName);
         logger.info("Starting to create a room called '{}'", roomName);
 
         Validator.validateRoom(roomName);
@@ -50,14 +52,17 @@ public class RoomService {
     }
 
     public void addMessage(String roomId, AddMessageToRoom addMessageToRoom) {
+        roomId = BreakingCharactersUtils.replace(roomId);
+        String note = BreakingCharactersUtils.replace(addMessageToRoom.getNote());
+        String userId = BreakingCharactersUtils.replace(addMessageToRoom.getUserId());
         logger.info("Starting to add a message (note='{}', author='{}') to a room with id '{}'",
-                addMessageToRoom.getNote(), addMessageToRoom.getUserId(), roomId);
+                note, userId, roomId);
 
-        Validator.validateMessage(addMessageToRoom.getNote());
-        User author = userService.getById(addMessageToRoom.getUserId());
+        Validator.validateMessage(note);
+        User author = userService.getById(userId);
         RoomMessage roomMessage = new RoomMessage(
                 ObjectId.get().toString(),
-                addMessageToRoom.getNote(),
+                note,
                 LocalDateTime.now(),
                 author
         );
@@ -68,6 +73,7 @@ public class RoomService {
     }
 
     public List<RoomMessageView> getMessages(String roomId) {
+        roomId = BreakingCharactersUtils.replace(roomId);
         logger.info("Starting to return all of messages from room id '{}'", roomId);
 
         Room room = getRoomById(roomId);
@@ -77,7 +83,8 @@ public class RoomService {
                 .collect(Collectors.toList());
     }
 
-    public void deleteMessage(String messageId) {
+    public void deleteMessage(String message) {
+        String messageId = BreakingCharactersUtils.replace(message);
         logger.info("Starting to delete a message with id '{}'", messageId);
 
         Room room = roomRepository.findAll().stream()

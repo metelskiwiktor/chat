@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import pl.wsb.chat.domain.user.User;
 import pl.wsb.chat.domain.user.UserService;
+import pl.wsb.chat.lib.BreakingCharactersUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,9 +23,9 @@ public class PrivateMessageService {
     }
 
     public void addMessage(PrivateMessage privateMessage) {
-        String from = privateMessage.getFrom().getId().replaceAll("[\n|\r\t]", "_");
-        String to = privateMessage.getTo().getId().replaceAll("[\n|\r\t]", "_");
-        String message = privateMessage.getMessage().replaceAll("[\n|\r\t]", "_");
+        String from = BreakingCharactersUtils.replace(privateMessage.getFrom().getId());
+        String to = BreakingCharactersUtils.replace(privateMessage.getTo().getId());
+        String message = BreakingCharactersUtils.replace(privateMessage.getMessage());
         logger.info("Starting to add private message (from='{}', to='{}', message='{}')",
                 from, to, message);
 
@@ -32,7 +33,7 @@ public class PrivateMessageService {
     }
 
     public List<PrivateMessage> getMessages(String recipientId) {
-        recipientId = recipientId.replaceAll("[\n|\r\t]", "_");
+        recipientId = BreakingCharactersUtils.replace(recipientId);
         logger.info("Started to get all of private messages from recipientId='{}'", recipientId);
 
         User user = userService.getById(recipientId);
@@ -42,7 +43,7 @@ public class PrivateMessageService {
     }
 
     public List<Conversation> getConversations(String userId) {
-        userId = userId.replaceAll("[\n|\r\t]", "_");
+        userId = BreakingCharactersUtils.replace(userId);
         logger.info("Started to get all of conversations for user='{}'", userId);
 
         User user = userService.getById(userId);
