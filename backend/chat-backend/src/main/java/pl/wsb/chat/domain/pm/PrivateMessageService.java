@@ -23,7 +23,7 @@ public class PrivateMessageService {
 
     public void addMessage(PrivateMessage privateMessage) {
         logger.info("Starting to add private message (from='{}', to='{}', message='{}')",
-                privateMessage.getFrom(), privateMessage.getTo(), privateMessage.getMessage());
+                privateMessage.getFrom().getId(), privateMessage.getTo().getId(), privateMessage.getMessage());
 
         privateMessageRepository.save(privateMessage);
     }
