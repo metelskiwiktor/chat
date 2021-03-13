@@ -31,7 +31,7 @@ public class SampleDataInitialization implements ApplicationRunner {
     }
 
     private void saveSampleDataIfRepoEmpty() {
-        System.out.println("==============================\nSTARTING INITIALIZATION");
+        System.out.println("===============================\nSTARTING INITIALIZATION");
         int pmSize = privateMessageRepository.findAll().size();
         int rSize = roomRepository.findAll().size();
         int uSize = userRepository.findAll().size();
@@ -68,7 +68,7 @@ public class SampleDataInitialization implements ApplicationRunner {
         roomRepository.findAll()
                 .forEach(System.out::println);
 
-        System.out.println("END OF INITIALIZATION\n==============================");
+        System.out.println("END OF INITIALIZATION\n===============================");
     }
 
     @Override
