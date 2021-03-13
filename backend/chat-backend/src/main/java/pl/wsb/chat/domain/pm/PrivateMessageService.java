@@ -22,13 +22,17 @@ public class PrivateMessageService {
     }
 
     public void addMessage(PrivateMessage privateMessage) {
+        String from = privateMessage.getFrom().getId().replaceAll("[\n|\r\t]", "_");
+        String to = privateMessage.getTo().getId().replaceAll("[\n|\r\t]", "_");
+        String message = privateMessage.getMessage().replaceAll("[\n|\r\t]", "_");
         logger.info("Starting to add private message (from='{}', to='{}', message='{}')",
-                privateMessage.getFrom().getId(), privateMessage.getTo().getId(), privateMessage.getMessage());
+                from, to, message);
 
         privateMessageRepository.save(privateMessage);
     }
 
     public List<PrivateMessage> getMessages(String recipientId) {
+        recipientId = recipientId.replaceAll("[\n|\r\t]", "_");
         logger.info("Started to get all of private messages from recipientId='{}'", recipientId);
 
         User user = userService.getById(recipientId);
@@ -38,6 +42,7 @@ public class PrivateMessageService {
     }
 
     public List<Conversation> getConversations(String userId) {
+        userId = userId.replaceAll("[\n|\r\t]", "_");
         logger.info("Started to get all of conversations for user='{}'", userId);
 
         User user = userService.getById(userId);
