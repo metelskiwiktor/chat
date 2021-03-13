@@ -1,5 +1,7 @@
 package pl.wsb.chat.api;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -11,6 +13,7 @@ import java.time.format.DateTimeFormatter;
 
 @ControllerAdvice
 public class CustomExceptionHandler {
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private final DateTimeFormatter formatter;
     private final Clock clock;
 
@@ -21,6 +24,7 @@ public class CustomExceptionHandler {
 
     @ExceptionHandler(DomainException.class)
     public ResponseEntity<Error> handleDomainException(DomainException exception) {
+        logger.error("Domain exception occurred");
         exception.printStackTrace();
 
         HttpStatus httpStatus = HttpStatus.valueOf(exception.getCode().getStatus());
