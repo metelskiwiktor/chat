@@ -17,17 +17,17 @@ public class PrivateMessageController {
     }
 
     @PostMapping
-    public void addPrivateMessage(@RequestBody PrivateMessage privateMessage){
+    public void addPrivateMessage(@RequestBody PrivateMessage privateMessage) {
         privateMessageService.addMessage(privateMessage);
     }
 
     @GetMapping("/get-all")
-    public List<PrivateMessage> getPrivateMessages(@RequestParam String recipient){
-        return privateMessageService.getMessages(recipient);
+    public List<PrivateMessage> getPrivateMessages(@RequestParam("recipient-id") String recipientId) {
+        return privateMessageService.getMessages(recipientId);
     }
 
     @GetMapping("/conversations")
-    public List<Conversation> getConversations(@RequestParam String userId){
+    public List<Conversation> getConversations(@RequestParam("user-id") String userId) {
         return privateMessageService.getConversations(userId);
     }
 }

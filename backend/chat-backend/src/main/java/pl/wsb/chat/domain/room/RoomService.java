@@ -1,6 +1,8 @@
 package pl.wsb.chat.domain.room;
 
 import org.bson.types.ObjectId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 import pl.wsb.chat.api.dto.request.AddMessageToRoom;
@@ -19,6 +21,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class RoomService {
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private final RoomRepository roomRepository;
     private final UserService userService;
     private final ConversionService conversionService;
@@ -30,6 +33,8 @@ public class RoomService {
     }
 
     public RoomView createRoom(String roomName) {
+        logger.info("Starting to create a room called '{}'", roomName);
+
         Validator.validateRoom(roomName);
 
         if (existRoomByName(roomName)) {
@@ -45,6 +50,9 @@ public class RoomService {
     }
 
     public void addMessage(String roomId, AddMessageToRoom addMessageToRoom) {
+        logger.info("Starting to add a message (note='{}', author='{}') to a room with id '{}'",
+                addMessageToRoom.getNote(), addMessageToRoom.getUserId(), roomId);
+
         Validator.validateMessage(addMessageToRoom.getNote());
         User author = userService.getById(addMessageToRoom.getUserId());
         RoomMessage roomMessage = new RoomMessage(
@@ -60,6 +68,8 @@ public class RoomService {
     }
 
     public List<RoomMessageView> getMessages(String roomId) {
+        logger.info("Starting to return all of messages from room id '{}'", roomId);
+
         Room room = getRoomById(roomId);
 
         return room.getMessages().stream()
@@ -68,6 +78,8 @@ public class RoomService {
     }
 
     public void deleteMessage(String messageId) {
+        logger.info("Starting to delete a message with id '{}'", messageId);
+
         Room room = roomRepository.findAll().stream()
                 .filter(r -> r.getMessages().stream()
                         .anyMatch(roomMessage -> roomMessage.getId().equals(messageId)))
