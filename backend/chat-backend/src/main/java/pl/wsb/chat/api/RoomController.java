@@ -1,14 +1,17 @@
 package pl.wsb.chat.api;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.wsb.chat.domain.room.Room;
-import pl.wsb.chat.domain.room.RoomMessage;
+import pl.wsb.chat.api.dto.request.AddMessageToRoom;
+import pl.wsb.chat.api.dto.response.RoomMessageView;
+import pl.wsb.chat.api.dto.response.RoomView;
 import pl.wsb.chat.domain.room.RoomService;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("message/room")
+@RequestMapping("/message/room")
 public class RoomController {
     private final RoomService roomService;
 
@@ -17,22 +20,22 @@ public class RoomController {
     }
 
     @PostMapping("/create")
-    public Room createRoom(@RequestParam String roomName){
-        return roomService.createRoom(roomName);
+    public ResponseEntity<RoomView> createRoom(@RequestBody String roomName) {
+        return new ResponseEntity<>(roomService.createRoom(roomName), HttpStatus.CREATED);
     }
 
-    @PostMapping("/{roomId}")
-    public void addMessage(@PathVariable String roomId, @RequestBody RoomMessage roomMessage){
-        roomService.addMessage(roomId, roomMessage);
+    @PostMapping("/{room-id}")
+    public void addMessage(@PathVariable("room-id") String roomId, @RequestBody AddMessageToRoom addMessageToRoom) {
+        roomService.addMessage(roomId, addMessageToRoom);
     }
 
-    @GetMapping("/{roomId}")
-    public List<RoomMessage> getMessages(@PathVariable String roomId){
+    @GetMapping("/{room-id}")
+    public List<RoomMessageView> getMessages(@PathVariable("room-id") String roomId) {
         return roomService.getMessages(roomId);
     }
 
-    @DeleteMapping("/{roomId}")
-    public void deleteMessage(@PathVariable String roomId, @RequestParam String messageId){
-        roomService.deleteMessage(roomId, messageId);
+    @DeleteMapping
+    public void deleteMessage(@RequestParam("message-id") String messageId) {
+        roomService.deleteMessage(messageId);
     }
 }
