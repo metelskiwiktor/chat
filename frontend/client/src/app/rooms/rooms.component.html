@@ -12,86 +12,103 @@
 
 <div id="container">
 
-<div id="sidebar">
+  <div id="sidebar">
 
-  <div class="room-list">
-    <ul style="list-style-type: none">
+    <div class="room-list">
+      <ul style="list-style-type: none">
 
-      <li>
-        Wichi Wiktor
-      </li>
-      <li>
-        Marcin Łysy
-      </li>
-      <li>
-        Wejherowo Team
-      </li>
-      <li>
-        ZSET TEAM
-      </li>
-      <li>
-        Lebioda
-      </li>
-      <li>
-        MarcinRajan
-      </li>
-      <li>
-        BiałyStockTeam
-      </li>
-      <li>
-        DobreWariatyTeam
-      </li>
-      <li>
-        dawda
-      </li>
-      <li>
-        dawda
-      </li>
-      <li>
-        dawda
-      </li>
-      <li>
-        dawda
-      </li>
-      <li>
-        dawda
-      </li>
-      <li>
-        dawda
-      </li>
+        <a routerLink="../room">
+          <li>
+            Wichi Wiktor
+          </li>
+        </a>
+        <a routerLink="../room">
+          <li>
+            Marcin Łysy
+          </li>
+        </a>
+        <a routerLink="../room">
+          <li>
+            Wejherowo Team
+          </li>
+        </a>
+        <a routerLink="../room">
+          <li>
+            ZSET TEAM
+          </li>
+        </a>
+        <a routerLink="../room">
+          <li>
+            Lebioda
+          </li>
+        </a>
+        <a routerLink="../room">
+          <li>
+            MarcinRajan
+          </li>
+        </a>
+        <a routerLink="../room">
+          <li>
+            BiałyStockTeam
+          </li>
+        </a>
+        <a routerLink="../room">
+          <li>
+            DobreWariatyTeam
+          </li>
+        </a>
+        <a routerLink="../room">
+          <li>
+            dawda
+          </li>
+        </a>
+        <a routerLink="../room">
+          <li>
+            dawda
+          </li>
+        </a>
+        <a routerLink="../room">
+          <li>
+            dawda
+          </li>
+        </a>
+        <a routerLink="../room">
+          <li>
+            dawda
+          </li>
+        </a>
+        <a routerLink="../room">
+          <li>
+            dawda
+          </li>
+        </a>
+        <a routerLink="../room">
+          <li>
+            dawda
+          </li>
+        </a>
 
 
-    </ul>
+      </ul>
+
+    </div>
 
   </div>
 
-</div>
-
-  <script src="script.js"></script>
-<div class="dropdown">
-  <button id="myBtn" class="dropbtn">Stwórz pokój</button>
-  <div id="myDropdown" class="dropdown-content">
-<!--    <form action="/action_page.php">-->
-<!--      <label for="name">Nazwa pokoju:</label><br>-->
-<!--      <input type="text" id="fname" name="fname"><br>-->
-<!--      <input type="submit" value="Stwórz">-->
-<!--    </form>-->
+  <div class="dropdown">
+    <button onclick="myFunction()" id="myBtn" class="dropbtn">Stwórz pokój</button>
+    <div id="myDropdown" class="dropdown-content"><br>
+      <form>
+        <input type="text" id="room-name" placeholder="Nazwa pokoju" autocomplete="off"><br><br>
+        <input type="submit" value="Stwórz">
+      </form>
+    </div>
   </div>
+
+
 </div>
 
 
-
-</div>
-
-<script>
-  // Get the button, and when the user clicks on it, execute myFunction
-  document.getElementById("myBtn").onclick = function() {myFunction()};
-
-  /* myFunction toggles between adding and removing the show class, which is used to hide and show the dropdown content */
-  function myFunction() {
-    document.getElementById("myDropdown").classList.toggle("show");
-  }
-</script>
 </body>
 
 

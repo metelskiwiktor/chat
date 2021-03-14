@@ -29,51 +29,51 @@ body {
   width: 260px;
   float: left;
 
-.search {
-  padding: 20px;
-}
+  .search {
+    padding: 20px;
+  }
 
-input {
-  border-radius: 3px;
-  border: none;
-  padding: 14px;
-  color: white;
-  background: #6a6c75;
-  width: 90%;
-  font-size: 14px;
-}
+  input {
+    border-radius: 3px;
+    border: none;
+    padding: 14px;
+    color: white;
+    background: #6a6c75;
+    width: 90%;
+    font-size: 14px;
+  }
 
-.fa-search {
-  position: relative;
-  left: -25px;
-}
+  .fa-search {
+    position: relative;
+    left: -25px;
+  }
 
-ul {
-  padding: 20px;
-  height: 770px;
-  list-style-type: none;
+  ul {
+    padding: 20px;
+    height: 770px;
+    list-style-type: none;
 
-li {
-  padding-bottom: 20px;
-}
-}
+    li {
+      padding-bottom: 20px;
+    }
+  }
 
-img {
-  float: left;
-}
+  img {
+    float: left;
+  }
 
-.about {
-  float: left;
-  margin-top: 8px;
-}
+  .about {
+    float: left;
+    margin-top: 8px;
+  }
 
-.about {
-  padding-left: 8px;
-}
+  .about {
+    padding-left: 8px;
+  }
 
-.status {
-  color: $gray;
-}
+  .status {
+    color: $gray;
+  }
 }
 
 .chat {
@@ -85,126 +85,126 @@ img {
 
   color: #434651;
 
-.chat-header {
-  padding: 20px;
-  border-bottom: 2px solid white;
+  .chat-header {
+    padding: 20px;
+    border-bottom: 2px solid white;
 
-img {
-  float: left;
-}
+    img {
+      float: left;
+    }
 
-.chat-about {
-  float: left;
-  padding-left: 10px;
-  margin-top: 6px;
-}
+    .chat-about {
+      float: left;
+      padding-left: 10px;
+      margin-top: 6px;
+    }
 
-.chat-with {
-  font-weight: bold;
-  font-size: 16px;
-}
+    .chat-with {
+      font-weight: bold;
+      font-size: 16px;
+    }
 
-.chat-num-messages {
-  color: $gray;
-}
+    .chat-num-messages {
+      color: $gray;
+    }
 
-.fa-star {
-  float: right;
-  color: #d8dadf;
-  font-size: 20px;
-  margin-top: 12px;
-}
-}
+    .fa-star {
+      float: right;
+      color: #d8dadf;
+      font-size: 20px;
+      margin-top: 12px;
+    }
+  }
 
-.chat-history {
-  padding: 30px 30px 20px;
-  border-bottom: 2px solid white;
-  overflow-y: scroll;
-  height: 575px;
+  .chat-history {
+    padding: 30px 30px 20px;
+    border-bottom: 2px solid white;
+    overflow-y: scroll;
+    height: 575px;
 
-.message-data {
-  margin-bottom: 15px;
-}
+    .message-data {
+      margin-bottom: 15px;
+    }
 
-.message-data-time {
-  color: lighten($gray, 8%);
-  padding-left: 6px;
-}
+    .message-data-time {
+      color: lighten($gray, 8%);
+      padding-left: 6px;
+    }
 
-.message {
-  color: white;
-  padding: 18px 20px;
-  line-height: 26px;
-  font-size: 16px;
-  border-radius: 7px;
-  margin-bottom: 30px;
-  width: 90%;
-  position: relative;
+    .message {
+      color: white;
+      padding: 18px 20px;
+      line-height: 26px;
+      font-size: 16px;
+      border-radius: 7px;
+      margin-bottom: 30px;
+      width: 90%;
+      position: relative;
 
-&:after {
-   bottom: 100%;
-   left: 7%;
-   border: solid transparent;
-   content: " ";
-   height: 0;
-   width: 0;
-   position: absolute;
-   pointer-events: none;
-   border-bottom-color: $green;
-   border-width: 10px;
-   margin-left: -10px;
- }
-}
+      &:after {
+        bottom: 100%;
+        left: 7%;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+        border-bottom-color: $green;
+        border-width: 10px;
+        margin-left: -10px;
+      }
+    }
 
-.my-message {
-  background: $green;
-}
+    .my-message {
+      background: $green;
+    }
 
-.other-message {
-  background: $blue;
+    .other-message {
+      background: $blue;
 
-&:after {
-   border-bottom-color: $blue;
-   left: 93%;
- }
-}
-}
+      &:after {
+        border-bottom-color: $blue;
+        left: 93%;
+      }
+    }
+  }
 
-.chat-message {
-  padding: 30px;
+  .chat-message {
+    padding: 30px;
 
-textarea {
-  width: 100%;
-  border: none;
-  padding: 10px 20px;
-  font: 14px/22px "Lato", Arial, sans-serif;
-  margin-bottom: 10px;
-  border-radius: 5px;
-  resize: none;
-}
+    textarea {
+      width: 100%;
+      border: none;
+      padding: 10px 20px;
+      font: 14px/22px "Lato", Arial, sans-serif;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      resize: none;
+    }
 
-.fa-file-o,
-.fa-file-image-o {
-  font-size: 16px;
-  color: gray;
-  cursor: pointer;
-}
+    .fa-file-o,
+    .fa-file-image-o {
+      font-size: 16px;
+      color: gray;
+      cursor: pointer;
+    }
 
-button {
-  float: right;
-  color: $blue;
-  font-size: 16px;
-  text-transform: uppercase;
-  border: none;
-  cursor: pointer;
-  font-weight: bold;
-  background: #f2f5f8;
+    button {
+      float: right;
+      color: $blue;
+      font-size: 16px;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      background: #f2f5f8;
 
-&:hover {
-   color: darken($blue, 7%);
- }
-}
-}
+      &:hover {
+        color: darken($blue, 7%);
+      }
+    }
+  }
 }
 
 .online,
