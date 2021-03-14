@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {AppComponent} from '../app.component';
 
 @Component({
   selector: 'app-private-messages',
@@ -7,10 +8,10 @@ import {Component, OnInit} from '@angular/core';
 })
 export class PrivateMessagesComponent implements OnInit {
 
-  constructor() {
-  }
+  constructor(private app: AppComponent) { }
 
   ngOnInit(): void {
+    this.app.setTitle('Prywatne wiadomosci');
   }
 
 }

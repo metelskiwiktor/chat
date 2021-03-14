@@ -2,9 +2,197 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <link rel="stylesheet" href="room.component.scss" type="text/css"/>
   <title>Title</title>
 </head>
 <body>
-<h1>Room Works Correctly</h1>
+
+
+<div class="container clearfix">
+
+  <div class="people-list" id="people-list">
+    <ul class="list">
+
+      <li class="clearfix">
+        <div class="about">
+          <div class="name" style="color: #86bb71; font-size: large"><b>Aktywni użytkownicy</b></div>
+          <hr>
+        </div>
+      </li>
+
+      <li class="clearfix">
+        <div class="about">
+          <div class="name">Vincent Porter</div>
+
+        </div>
+      </li>
+
+      <li class="clearfix">
+        <div class="about">
+          <div class="name">Aiden Chavez</div>
+
+        </div>
+      </li>
+
+      <li class="clearfix">
+        <div class="about">
+          <div class="name">Mike Thomas</div>
+
+        </div>
+      </li>
+
+      <li class="clearfix">
+        <div class="about">
+          <div class="name">Erica Hughes</div>
+
+        </div>
+      </li>
+
+      <li class="clearfix">
+        <div class="about">
+          <div class="name">Ginger Johnston</div>
+
+        </div>
+      </li>
+
+      <li class="clearfix">
+        <div class="about">
+          <div class="name">Tracy Carpenter</div>
+
+        </div>
+      </li>
+
+      <li class="clearfix">
+        <div class="about">
+          <div class="name">Christian Kelly</div>
+
+        </div>
+      </li>
+
+      <li class="clearfix">
+        <div class="about">
+          <div class="name">Monica Ward</div>
+
+        </div>
+      </li>
+
+      <li class="clearfix">
+        <div class="about">
+          <div class="name">Dean Henry</div>
+
+        </div>
+      </li>
+
+      <li class="clearfix">
+        <div class="about">
+          <div class="name">Peyton Mckinney</div>
+
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="chat">
+    <div class="chat-header clearfix">
+
+      <div class="chat-about">
+        <div class="chat-with">Pokój numer #53X</div>
+        <div class="chat-num-messages">5 użytkowników jest aktywnych</div>
+      </div>
+      <i class="fa fa-star"></i>
+    </div> <!-- end chat-header -->
+
+    <div class="chat-history">
+      <ul style="list-style-type: none">
+        <li class="clearfix">
+          <div class="message-data align-right">
+            <span class="message-data-time">10:10 AM, dzisiaj</span> &nbsp; &nbsp;
+            <span class="message-data-name">Olia</span> <i class="fa fa-circle me"></i>
+
+          </div>
+          <div class="message other-message float-right">
+            Hi Vincent, how are you? How is the project coming along?
+          </div>
+        </li>
+
+        <li>
+          <div class="message-data">
+            <span class="message-data-name"><i class="fa fa-circle online"></i> Marcin</span>
+            <span class="message-data-time">10:12 AM, dzisiaj</span>
+          </div>
+          <div class="message my-message">
+            Siema jedziesz dzisiaj do KFC? Ponoć są wtorkowe kubełki znowu?
+          </div>
+        </li>
+
+        <li class="clearfix">
+          <div class="message-data align-right">
+            <span class="message-data-time">10:14 AM, dzisiaj</span> &nbsp; &nbsp;
+            <span class="message-data-name">Wiktor</span> <i class="fa fa-circle me"></i>
+
+          </div>
+          <div class="message other-message float-right">
+            Sory, ale zawalony pracą jestem. Poza tym i tak nie można jeść w środku a w aucie to mi sie nie chce.
+          </div>
+        </li>
+
+        <li>
+          <div class="message-data">
+            <span class="message-data-name"><i class="fa fa-circle online"></i> Marcin</span>
+            <span class="message-data-time">10:20 AM, dzisiaj</span>
+          </div>
+          <div class="message my-message">
+            No spoko. Btw chciałbyś może zacząć zarabiać dobre pieniądze i być sam dla siebie szefem?
+          </div>
+        </li>
+
+        <li>
+
+          <i class="fa fa-circle online"></i>
+          <i class="fa fa-circle online" style="color: #AED2A6"></i>
+          <i class="fa fa-circle online" style="color:#DAE9DA"></i>
+        </li>
+
+      </ul>
+
+    </div> <!-- end chat-history -->
+
+    <div class="chat-message clearfix">
+      <textarea name="message-to-send" id="message-to-send" placeholder="Type your message" rows="3"></textarea>
+
+
+      <button>Wyślij</button>
+
+    </div> <!-- end chat-message -->
+
+  </div> <!-- end chat -->
+
+</div> <!-- end container -->
+
+<script id="message-template" type="text/x-handlebars-template">
+  <li class="clearfix">
+    <div class="message-data align-right">
+      <span class="message-data-time">{{time}}, dzisiaj</span> &nbsp; &nbsp;
+      <span class="message-data-name">Olia</span> <i class="fa fa-circle me"></i>
+    </div>
+    <div class="message other-message float-right">
+      {{messageOutput}}
+    </div>
+  </li>
+</script>
+
+<script id="message-response-template" type="text/x-handlebars-template">
+  <li>
+    <div class="message-data">
+      <span class="message-data-name"><i class="fa fa-circle online"></i> Vincent</span>
+      <span class="message-data-time">{{time}}, dzisiaj</span>
+    </div>
+    <div class="message my-message">
+      {{response}}
+    </div>
+  </li>
+</script>
+
+
 </body>
 </html>

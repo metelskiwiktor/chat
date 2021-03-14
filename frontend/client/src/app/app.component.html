@@ -1,26 +1,17 @@
 <div class="container-fluid">
-  <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-    <ul class="navbar-nav">
-      <li class="nav-item ">
-        <a routerLink="mock" class="nav-link" class="btn btn-primary active" role="button">Mock</a>
+<!--  <nav class="navbar navbar-expand-sm bg-dark navbar-dark">-->
+    <ul class="ul-menu">
+      <li class="li-menu">
+        <a href="/rooms" class="a-menu" role="button">Pokoje</a>
       </li>
-      <li class="nav-item ">
-        <a routerLink="private-messages" class="nav-link" class="btn btn-primary active"
-           role="button">private-messages</a>
+      <li class="li-menu">
+        <a href="/private-messages" class="a-menu" role="button">Prywatne wiadomości</a>
       </li>
-      <li class="nav-item ">
-        <a routerLink="private-message" class="nav-link" class="btn btn-primary active" role="button">private message</a>
+      <li class="li-menu" style="float: right">
+        <a href="/profile" class="a-menu active" role="button">Profil</a>
       </li>
-      <li class="nav-item ">
-        <a routerLink="profile" class="nav-link" class="btn btn-primary active" role="button">profile</a>
-      </li>
-      <li class="nav-item ">
-        <a routerLink="room" class="nav-link" class="btn btn-primary active" role="button">room</a>
-      </li>
-      <li class="nav-item ">
-        <a routerLink="rooms" class="nav-link" class="btn btn-primary active" role="button">rooms</a>
       </li>
     </ul>
-  </nav>
+<!--  </nav>-->
   <router-outlet></router-outlet>
 </div>
