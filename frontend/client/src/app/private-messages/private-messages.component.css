@@ -22,8 +22,9 @@ h3 {
   background: #f8f8f8 none repeat scroll 0 0;
   float: left;
   overflow: hidden;
-  max-width: 36%;
+  max-width: 26%;
   border-right: 1px solid #c4c4c4;
+  margin-left: 10%;
 }
 
 .inbox_msg {
@@ -166,7 +167,7 @@ h3 {
 .mesgs {
   float: left;
   padding: 30px 15px 0 25px;
-  width: 60%;
+  width: 50%;
 }
 
 .sent_msg p {
