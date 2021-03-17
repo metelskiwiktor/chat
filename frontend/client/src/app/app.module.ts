@@ -6,6 +6,13 @@ import {HttpClientModule} from '@angular/common/http';
 import {RouterModule} from '@angular/router';
 import {AppRoutingModule, routingComponents} from './app-routing.module';
 import {PrivateMessageComponent} from './private-message/private-message.component';
+import {MockComponent} from './mock/mock.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import {RoomsComponent} from './rooms/rooms.component';
+import {RoomComponent} from './room/room.component';
+import {ProfileComponent} from './profile/profile.component';
+import {FormsModule} from '@angular/forms';
 
 
 @NgModule({
@@ -13,12 +20,19 @@ import {PrivateMessageComponent} from './private-message/private-message.compone
     AppComponent,
     routingComponents,
     PrivateMessageComponent,
+    RoomsComponent,
+    RoomComponent,
+    ProfileComponent,
+    MockComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     AppRoutingModule,
     BrowserModule,
     HttpClientModule,
-    RouterModule
+    RouterModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

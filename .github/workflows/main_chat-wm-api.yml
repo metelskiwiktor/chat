@@ -1,8 +1,4 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-
 name: Build and deploy backend - chat-wm-api
-
 on:
   push:
     branches:
@@ -24,8 +20,25 @@ jobs:
     - name: Build with Maven
       run: mvn clean package -f backend/chat-backend/pom.xml
       
-    - name: Move jar and web.config to staging directory
-      run: mkdir staging && cp backend/chat-backend/target/*.jar staging && cp backend/chat-backend/web.config staging
+    - name: Create staging directory and move application jar there
+      run: mkdir staging && cp backend/chat-backend/target/*.jar staging
+      
+    - name: Create web.config for azure
+      uses: DamianReeves/write-file-action@v1.0
+      with:
+        path: "staging/web.config"
+        contents: |
+          <?xml version='1.0' encoding='UTF-8'?>
+          <configuration>
+            <system.webServer>
+              <handlers>
+                <add name='httpPlatformHandler' path='*' verb='*' modules='httpPlatformHandler' resourceType='Unspecified' />
+              </handlers>
+              <httpPlatform processPath='%JAVA_HOME%\bin\java.exe'
+                  arguments='-Djava.net.preferIPv4Stack=true -Dserver.port=%HTTP_PLATFORM_PORT% -jar -Dapplication.properties=application-azure.properties -Djasypt.encryptor.password=${{ secrets.JASYPT_AZURE_PASSWORD }} -Dspring.profiles.active=azure &quot;%HOME%\site\wwwroot\chat-0.0.1.jar&quot;'>
+              </httpPlatform>
+            </system.webServer>
+          </configuration>
       
     - name: Show staging files
       run: "ls staging"

@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class ChatApplication {
     static {
-        System.out.println("DZIAŁA STATIC");
         System.setProperty("java.net.preferIPv4Stack", "true");
     }
 

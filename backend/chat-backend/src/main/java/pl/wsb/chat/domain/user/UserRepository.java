@@ -11,4 +11,8 @@ public interface UserRepository {
     Optional<User> findById(String userId);
 
     void deleteAll();
+
+    Optional<User> findByLogin(String login);
+
+    boolean existsByLogin(String login);
 }

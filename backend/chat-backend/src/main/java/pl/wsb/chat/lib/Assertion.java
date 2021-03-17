@@ -11,6 +11,17 @@ public final class Assertion {
     private Assertion() {
     }
 
+    public static void isBiggerEqualsThan(int requiredMinimumSize, String value, Supplier<DomainException> exception) {
+        notEmpty(value, exception);
+        isTrue(value.length() >= requiredMinimumSize, exception);
+    }
+
+    public static void isTrue(boolean value, Supplier<DomainException> exception) {
+        if (!value) {
+            throw exception.get();
+        }
+    }
+
     public static void notEmpty(String value, Supplier<DomainException> exception) {
         notNull(value, exception);
         if (isBlank(value)) {

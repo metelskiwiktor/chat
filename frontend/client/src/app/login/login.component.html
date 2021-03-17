@@ -1,0 +1,19 @@
+<div style="margin-top: 200px">
+<form>
+  <h2 style="color: #2a485b"><span class="entypo-login"><i class="fa fa-sign-in"></i></span> Logowanie</h2>
+
+  <button class="submit" (click)="login()"><span class="entypo-lock"><i class="fa fa-lock"></i></span></button>
+
+  <span class="entypo-user inputUserIcon">
+     <i class="fa fa-user"></i>
+   </span>
+  <input type="text" class="user" placeholder="Nazwa użytkownika" [(ngModel)]="username" [ngModelOptions]="{standalone: true}"/>
+
+  <span class="entypo-key inputPassIcon">
+     <i class="fa fa-key"></i>
+   </span>
+  <input type="password" class="pass" placeholder="Hasło" [(ngModel)]="password" [ngModelOptions]="{standalone: true}"/>
+
+  <p style="margin-left: 5%; font-size: smaller"><i>Zapomniałeś hasła? Nie nasz problem.</i></p>
+</form>
+</div>
