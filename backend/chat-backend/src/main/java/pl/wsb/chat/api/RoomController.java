@@ -3,13 +3,13 @@ package pl.wsb.chat.api;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.wsb.chat.api.dto.request.AddMessageToRoom;
 import pl.wsb.chat.api.dto.response.RoomMessageView;
 import pl.wsb.chat.api.dto.response.RoomView;
 import pl.wsb.chat.domain.room.RoomService;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/message/room")
 public class RoomController {
@@ -25,8 +25,8 @@ public class RoomController {
     }
 
     @PostMapping("/{room-id}")
-    public void addMessage(@PathVariable("room-id") String roomId, @RequestBody AddMessageToRoom addMessageToRoom) {
-        roomService.addMessage(roomId, addMessageToRoom);
+    public void addMessage(@PathVariable("room-id") String roomId, @RequestBody String message) {
+        roomService.addMessage(roomId, message);
     }
 
     @GetMapping("/{room-id}")

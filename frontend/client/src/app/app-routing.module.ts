@@ -6,6 +6,8 @@ import {ProfileComponent} from './profile/profile.component';
 import {RoomComponent} from './room/room.component';
 import {RoomsComponent} from './rooms/rooms.component';
 import {PrivateMessageComponent} from './private-message/private-message.component';
+import {LoginComponent} from './login/login.component';
+import {RegisterComponent} from './register/register.component';
 
 const routes: Routes = [
   {path: '', component: RoomsComponent},
@@ -15,6 +17,8 @@ const routes: Routes = [
   {path: 'profile', component: ProfileComponent},
   {path: 'room', component: RoomComponent},
   {path: 'rooms', component: RoomsComponent},
+  {path: 'login', component: LoginComponent},
+  {path: 'register', component: RegisterComponent},
 ];
 
 @NgModule({
@@ -24,4 +28,6 @@ const routes: Routes = [
 export class AppRoutingModule {
 }
 
-export const routingComponents = [PrivateMessagesComponent, ProfileComponent, RoomsComponent, RoomComponent, PrivateMessageComponent];
+export const routingComponents = [
+  PrivateMessagesComponent, ProfileComponent, RoomsComponent, RoomComponent, PrivateMessageComponent, LoginComponent, RegisterComponent
+];

@@ -11,12 +11,12 @@ import java.util.Locale;
 @Configuration
 public class ProjectConfiguration {
     @Bean
-    public Clock defaultClock(){
+    public Clock defaultClock() {
         return Clock.systemDefaultZone();
     }
 
     @Bean
-    public DateTimeFormatter dateTimeFormatter(){
+    public DateTimeFormatter dateTimeFormatter() {
         return DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss")
                 .withLocale(new Locale("pl"))
                 .withZone(ZoneId.systemDefault());

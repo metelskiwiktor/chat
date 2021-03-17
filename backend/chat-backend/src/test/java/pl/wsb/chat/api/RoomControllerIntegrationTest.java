@@ -1,7 +1,5 @@
 package pl.wsb.chat.api;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -17,12 +15,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.web.context.WebApplicationContext;
-import pl.wsb.chat.api.dto.request.AddMessageToRoom;
 import pl.wsb.chat.domain.room.Room;
 import pl.wsb.chat.domain.room.RoomMessage;
 import pl.wsb.chat.domain.room.RoomRepository;
-import pl.wsb.chat.domain.user.User;
 import pl.wsb.chat.domain.user.UserRepository;
+import pl.wsb.chat.security.UserPrincipalAuth;
 
 import javax.servlet.ServletContext;
 import java.util.ArrayList;
@@ -39,7 +36,6 @@ public class RoomControllerIntegrationTest {
     public static final String ENDPOINT_ADD_MESSAGE = "/message/room";
     public static final String ENDPOINT_GET_ROOM_MESSAGES = "/message/room";
     public static final String ENDPOINT_DELETE_ROOM_MESSAGE = "/message/room";
-    private final ObjectMapper mapper = new ObjectMapper();
     @Autowired
     private MockMvc mockMvc;
     @Autowired
@@ -48,6 +44,8 @@ public class RoomControllerIntegrationTest {
     private RoomRepository roomRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private UserPrincipalAuth userPrincipalAuth;
 
     @AfterEach
     void tearDown() {
@@ -126,15 +124,14 @@ public class RoomControllerIntegrationTest {
     @Test
     void addedMessageToRoomShouldBeInDatabase() throws Exception {
         //GIVEN
-        User user = createUser();
         Room room = createRoom();
-        AddMessageToRoom addMessageToRoom = new AddMessageToRoom("message note", user.getId());
+        String message = "message note";
 
         //WHEN
-        addMessageToRoomRequest(room.getId(), addMessageToRoom);
+        addMessageToRoomRequest(room.getId(), message);
         boolean roomContainsMessage = roomRepository.findAll().stream()
                 .anyMatch(r -> r.getMessages().stream()
-                        .anyMatch(rm -> rm.getNote().equals(addMessageToRoom.getNote())));
+                        .anyMatch(rm -> rm.getNote().equals(message)));
 
         //THEN
         assertTrue(roomContainsMessage);
@@ -143,17 +140,16 @@ public class RoomControllerIntegrationTest {
     @Test
     void addedMultipleMessagesToRoomShouldBeInDatabase() throws Exception {
         //GIVEN
-        User user = createUser();
         Room room = createRoom();
-        AddMessageToRoom addMessageToRoom1 = new AddMessageToRoom("message note 1", user.getId());
-        AddMessageToRoom addMessageToRoom2 = new AddMessageToRoom("message note 2", user.getId());
-        AddMessageToRoom addMessageToRoom3 = new AddMessageToRoom("message note 3", user.getId());
+        String message1 = "message note 1";
+        String message2 = "message note 2";
+        String message3 = "message note 3";
         int expectedStatus = HttpStatus.OK.value();
 
         //WHEN
-        int actualStatus1 = addMessageToRoomRequest(room.getId(), addMessageToRoom1).getResponse().getStatus();
-        int actualStatus2 = addMessageToRoomRequest(room.getId(), addMessageToRoom2).getResponse().getStatus();
-        int actualStatus3 = addMessageToRoomRequest(room.getId(), addMessageToRoom3).getResponse().getStatus();
+        int actualStatus1 = addMessageToRoomRequest(room.getId(), message1).getResponse().getStatus();
+        int actualStatus2 = addMessageToRoomRequest(room.getId(), message2).getResponse().getStatus();
+        int actualStatus3 = addMessageToRoomRequest(room.getId(), message3).getResponse().getStatus();
         List<RoomMessage> roomMessages = roomRepository.findById(room.getId())
                 .orElseThrow(RuntimeException::new)
                 .getMessages();
@@ -162,54 +158,47 @@ public class RoomControllerIntegrationTest {
         assertEquals(expectedStatus, actualStatus1);
         assertEquals(expectedStatus, actualStatus2);
         assertEquals(expectedStatus, actualStatus3);
-        assertTrue(roomMessages.stream().anyMatch(rm -> rm.getNote().equals(addMessageToRoom1.getNote())));
-        assertTrue(roomMessages.stream().anyMatch(rm -> rm.getNote().equals(addMessageToRoom2.getNote())));
-        assertTrue(roomMessages.stream().anyMatch(rm -> rm.getNote().equals(addMessageToRoom3.getNote())));
+        assertTrue(roomMessages.stream().anyMatch(rm -> rm.getNote().equals(message1)));
+        assertTrue(roomMessages.stream().anyMatch(rm -> rm.getNote().equals(message2)));
+        assertTrue(roomMessages.stream().anyMatch(rm -> rm.getNote().equals(message3)));
     }
 
     @Test
     void addedMessageWithInvalidRoomShouldReturnNotFound() throws Exception {
         //GIVEN
-        User user = createUser();
         String invalidRoomId = "invalid room id";
         int expectedStatus = HttpStatus.NOT_FOUND.value();
-        AddMessageToRoom addMessageToRoom = new AddMessageToRoom("message note", user.getId());
+        String message = "message note";
 
         //WHEN
-        int actualStatus = addMessageToRoomRequest(invalidRoomId, addMessageToRoom).getResponse().getStatus();
+        int actualStatus = addMessageToRoomRequest(invalidRoomId, message).getResponse().getStatus();
 
         //THEN
         assertEquals(expectedStatus, actualStatus);
     }
 
     @Test
-    void addedInvalidMessageToRoomShouldReturnBadRequest() throws Exception {
+    void addedEmptyMessageToRoomShouldReturnBadRequest() throws Exception {
         //GIVEN
-        User user = createUser();
         Room room = createRoom();
-        AddMessageToRoom nullMessage = new AddMessageToRoom(null, user.getId());
-        AddMessageToRoom blankMessage = new AddMessageToRoom("", user.getId());
+        String blankMessage = "";
         int expectedStatus = HttpStatus.BAD_REQUEST.value();
 
         //WHEN
-        int actualNullMessageStatus = addMessageToRoomRequest(room.getId(), nullMessage).getResponse().getStatus();
         int actualBlankMessageStatus = addMessageToRoomRequest(room.getId(), blankMessage).getResponse().getStatus();
 
         //THEN
-        assertEquals(expectedStatus, actualNullMessageStatus);
         assertEquals(expectedStatus, actualBlankMessageStatus);
     }
 
     @Test
     void getMessagesShouldReturnListOfMessages() throws Exception {
         //GIVEN
-        User user1 = createUser();
-        User user2 = createUser();
         Room room1 = createRoom();
         Room room2 = createRoom();
-        AddMessageToRoom addMessageToRoom1 = new AddMessageToRoom("room note 1", user1.getId());
-        AddMessageToRoom addMessageToRoom2 = new AddMessageToRoom("room note 2", user2.getId());
-        AddMessageToRoom addMessageToRoom3 = new AddMessageToRoom("room note 3", user2.getId());
+        String addMessageToRoom1 = "room note 1";
+        String addMessageToRoom2 = "room note 2";
+        String addMessageToRoom3 = "room note 3";
         int expectedStatus = HttpStatus.OK.value();
 
         //WHEN
@@ -220,13 +209,13 @@ public class RoomControllerIntegrationTest {
         int actualStatus = mvcResult.getResponse().getStatus();
         boolean containsMessage1 = mvcResult.getResponse()
                 .getContentAsString()
-                .contains("note\":\"" + addMessageToRoom1.getNote() + "\"");
+                .contains("note\":\"" + addMessageToRoom1 + "\"");
         boolean containsMessage2 = mvcResult.getResponse()
                 .getContentAsString()
-                .contains("note\":\"" + addMessageToRoom2.getNote() + "\"");
+                .contains("note\":\"" + addMessageToRoom2 + "\"");
         boolean containsMessage3 = mvcResult.getResponse()
                 .getContentAsString()
-                .contains("note\":\"" + addMessageToRoom3.getNote() + "\"");
+                .contains("note\":\"" + addMessageToRoom3 + "\"");
 
         //THEN
         assertEquals(expectedStatus, actualStatus);
@@ -252,14 +241,13 @@ public class RoomControllerIntegrationTest {
     void deleteMessageRoomRequestShouldDeleteMessageRoomFromDatabase() throws Exception {
         //GIVEN
         Room room = createRoom();
-        User user = createUser();
         int expectedStatus = HttpStatus.OK.value();
-        AddMessageToRoom addMessageToRoom = new AddMessageToRoom("message note 1", user.getId());
-        addMessageToRoomRequest(room.getId(), addMessageToRoom);
+        String message = "message note 1";
+        addMessageToRoomRequest(room.getId(), message);
         String messageId = roomRepository.findById(room.getId())
                 .orElseThrow(RuntimeException::new)
                 .getMessages().stream()
-                .filter(rm -> rm.getNote().equals(addMessageToRoom.getNote()))
+                .filter(rm -> rm.getNote().equals(message))
                 .findFirst()
                 .orElseThrow(RuntimeException::new)
                 .getId();
@@ -269,7 +257,7 @@ public class RoomControllerIntegrationTest {
         boolean existMessage = roomRepository.findById(room.getId())
                 .orElseThrow(RuntimeException::new)
                 .getMessages().stream()
-                .anyMatch(rm -> rm.getNote().equals(addMessageToRoom.getNote()));
+                .anyMatch(rm -> rm.getNote().equals(message));
 
         //THEN
         assertEquals(expectedStatus, actualStatus);
@@ -289,10 +277,6 @@ public class RoomControllerIntegrationTest {
         assertEquals(expectedStatus, actualStatus);
     }
 
-    private User createUser() {
-        return userRepository.save(new User("user"));
-    }
-
     private Room createRoom() {
         return roomRepository.save(new Room("room name", new ArrayList<>()));
     }
@@ -306,19 +290,18 @@ public class RoomControllerIntegrationTest {
         return mockMvc.perform
                 (MockMvcRequestBuilders
                         .post(ENDPOINT_CREATE_ROOM)
+                        .header("Authorization", userPrincipalAuth.getJWT())
                         .content(roomName))
                 .andReturn();
     }
 
-    private MvcResult addMessageToRoomRequest(String roomId, AddMessageToRoom addMessageToRoom) throws Exception {
-        ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
-        String requestJson = ow.writeValueAsString(addMessageToRoom);
-
+    private MvcResult addMessageToRoomRequest(String roomId, String message) throws Exception {
         return mockMvc.perform
                 (MockMvcRequestBuilders
                         .post(ENDPOINT_ADD_MESSAGE + "/" + roomId)
-                        .contentType(MediaType.APPLICATION_JSON_UTF8)
-                        .content(requestJson))
+                        .header("Authorization", userPrincipalAuth.getJWT())
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .content(message))
                 .andReturn();
     }
 
@@ -331,6 +314,7 @@ public class RoomControllerIntegrationTest {
         return mockMvc.perform
                 (MockMvcRequestBuilders
                         .delete(ENDPOINT_DELETE_ROOM_MESSAGE)
+                        .header("Authorization", userPrincipalAuth.getJWT())
                         .param("message-id", messageId))
                 .andReturn();
     }

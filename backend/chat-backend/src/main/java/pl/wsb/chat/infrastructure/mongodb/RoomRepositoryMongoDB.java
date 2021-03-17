@@ -4,6 +4,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import pl.wsb.chat.domain.room.Room;
 import pl.wsb.chat.domain.room.RoomRepository;
 
-public interface RoomRepositoryAzureMongoDB extends RoomRepository, MongoRepository<Room, String> {
+public interface RoomRepositoryMongoDB extends RoomRepository, MongoRepository<Room, String> {
     boolean existsByName(String name);
 }

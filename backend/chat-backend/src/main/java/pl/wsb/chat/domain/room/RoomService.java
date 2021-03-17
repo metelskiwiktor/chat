@@ -5,13 +5,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
-import pl.wsb.chat.api.dto.request.AddMessageToRoom;
 import pl.wsb.chat.api.dto.response.RoomMessageView;
 import pl.wsb.chat.api.dto.response.RoomView;
 import pl.wsb.chat.domain.exception.DomainException;
 import pl.wsb.chat.domain.exception.ExceptionCode;
 import pl.wsb.chat.domain.user.User;
 import pl.wsb.chat.domain.user.UserService;
+import pl.wsb.chat.infrastructure.security.PrincipalInformation;
 import pl.wsb.chat.lib.Assertion;
 import pl.wsb.chat.lib.BreakingCharactersUtils;
 
@@ -26,11 +26,14 @@ public class RoomService {
     private final RoomRepository roomRepository;
     private final UserService userService;
     private final ConversionService conversionService;
+    private final PrincipalInformation principalInformation;
 
-    public RoomService(RoomRepository roomRepository, UserService userService, ConversionService conversionService) {
+    public RoomService(RoomRepository roomRepository, UserService userService, ConversionService conversionService,
+                       PrincipalInformation principalInformation) {
         this.roomRepository = roomRepository;
         this.userService = userService;
         this.conversionService = conversionService;
+        this.principalInformation = principalInformation;
     }
 
     public RoomView createRoom(String roomName) {
@@ -51,12 +54,12 @@ public class RoomService {
         return conversionService.convert(room, RoomView.class);
     }
 
-    public void addMessage(String roomId, AddMessageToRoom addMessageToRoom) {
-        Validator.validateMessage(addMessageToRoom.getNote());
+    public void addMessage(String roomId, String message) {
+        Validator.validateMessage(message);
 
         roomId = BreakingCharactersUtils.replace(roomId);
-        String note = BreakingCharactersUtils.replace(addMessageToRoom.getNote());
-        String userId = BreakingCharactersUtils.replace(addMessageToRoom.getUserId());
+        String note = BreakingCharactersUtils.replace(message);
+        String userId = principalInformation.getUserId();
         logger.info("Starting to add a message (note='{}', author='{}') to a room with id '{}'",
                 note, userId, roomId);
 
@@ -74,8 +77,6 @@ public class RoomService {
     }
 
     public List<RoomMessageView> getMessages(String roomId) {
-        Validator.validateRoom(roomId);
-
         roomId = BreakingCharactersUtils.replace(roomId);
         logger.info("Starting to return all of messages from room id '{}'", roomId);
 
@@ -87,8 +88,6 @@ public class RoomService {
     }
 
     public void deleteMessage(String message) {
-        Validator.validateMessage(message);
-
         String messageId = BreakingCharactersUtils.replace(message);
         logger.info("Starting to delete a message with id '{}'", messageId);
 
@@ -116,12 +115,19 @@ public class RoomService {
     }
 
     private static class Validator {
+        public static final String ROOM = "rom";
+        public static final String MESSAGE = "message";
+        public static final int ROOM_MINIMUM_SIZE = 5;
+        public static final int NOTE_MINIMUM_SIZE = 1;
+
         static void validateRoom(String roomName) {
-            Assertion.notEmpty(roomName, () -> new DomainException(ExceptionCode.ROOM_HAS_BLANK_NAME));
+            Assertion.isBiggerEqualsThan(ROOM_MINIMUM_SIZE, roomName,
+                    () -> new DomainException(ExceptionCode.FIELD_IS_TOO_SHORT, ROOM));
         }
 
         static void validateMessage(String note) {
-            Assertion.notEmpty(note, () -> new DomainException(ExceptionCode.INVALID_MESSAGE));
+            Assertion.isBiggerEqualsThan(NOTE_MINIMUM_SIZE, note,
+                    () -> new DomainException(ExceptionCode.FIELD_IS_TOO_SHORT, MESSAGE));
         }
     }
 }
