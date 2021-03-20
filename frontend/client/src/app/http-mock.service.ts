@@ -6,7 +6,8 @@ import {LoginModel} from '../model/LoginModel';
   providedIn: 'root'
 })
 export class HttpMockService {
-  private baseUrl = 'http://localhost:8080';
+  // private baseUrl = 'http://localhost:8080';
+  private baseUrl = 'https://chat-wm-api.azurewebsites.net';
 
   constructor(private http: HttpClient) {
   }
