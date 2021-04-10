@@ -16,9 +16,9 @@ import pl.wsb.chat.lib.Assertion;
 import pl.wsb.chat.lib.BreakingCharactersUtils;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class RoomService {
@@ -84,6 +84,8 @@ public class RoomService {
 
         return room.getMessages().stream()
                 .map(roomMessage -> conversionService.convert(roomMessage, RoomMessageView.class))
+                .filter(Objects::nonNull)
+                .sorted(Comparator.comparing(RoomMessageView::getDate).reversed())
                 .collect(Collectors.toList());
     }
 
@@ -105,6 +107,12 @@ public class RoomService {
         roomRepository.save(room);
     }
 
+    public List<RoomView> getRooms() {
+        return roomRepository.findAll().stream()
+                .map(room -> conversionService.convert(room, RoomView.class))
+                .collect(Collectors.toList());
+    }
+
     public Room getRoomById(String roomId) {
         return roomRepository.findById(roomId)
                 .orElseThrow(() -> new DomainException(ExceptionCode.NO_SUCH_ROOM, roomId));
@@ -112,6 +120,14 @@ public class RoomService {
 
     public boolean existRoomByName(String roomName) {
         return roomRepository.existsByName(roomName);
+    }
+
+    public int countMessagesByUser(User user) {
+        return (int) roomRepository.findAll().stream()
+                .flatMap(room -> Stream.of(room.getMessages()))
+                .flatMap(List::stream)
+                .filter(roomMessage -> roomMessage.getAuthor().getId().equals(user.getId()))
+                .count();
     }
 
     private static class Validator {

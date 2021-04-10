@@ -21,18 +21,17 @@
         </div>
         <div class="col-md-8 col-xs-12 col-sm-6 col-lg-8">
           <div class="container">
-            <h2>Marcin Wiktorowski</h2>
-            <a routerLink="/private-messages"><p>Napisz prywatną wiadomość</p></a>
+            <h2>{{userName}}</h2>
+            <a [routerLink]="['/private-messages', userName]"><p>Napisz prywatną wiadomość</p></a>
 
           </div>
           <hr>
           <ul class="container details">
-            <li><p><span class="glyphicon glyphicon-user one" style="width:50px;"></span>m.wiktorowski</p></li>
-            <li><p><span class="glyphicon glyphicon-envelope one" style="width:50px;"></span>marcin@onet.pl</p></li>
+            <li><p><span class="glyphicon glyphicon-user one" style="width:50px;"></span>brak strony</p></li>
+            <li><p><span class="glyphicon glyphicon-envelope one" style="width:50px;"></span>brak danych kontaktowych</p></li>
           </ul>
           <hr>
-          <div class="col-sm-5 col-xs-6 tital ">Data dołączenia : ?</div>
-          <div class="col-sm-5 col-xs-6 tital ">Znajomi(ilość) :?</div>
+          <div class="col-sm-5 col-xs-6 tital ">Liczba wiadomości w pokojach: {{roomMessages}}</div>
         </div>
       </div>
     </div>

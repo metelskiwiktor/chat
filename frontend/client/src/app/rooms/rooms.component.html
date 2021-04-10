@@ -15,93 +15,21 @@
 
   <div id="sidebar">
 
-    <div class="room-list">
-      <ul style="list-style-type: none">
-
-        <a routerLink="/room">
-          <li>
-            Wichi Wiktor
-          </li>
-        </a>
-        <a routerLink="/room">
-          <li>
-            Marcin Łysy
-          </li>
-        </a>
-        <a routerLink="/room">
-          <li>
-            Wejherowo Team
-          </li>
-        </a>
-        <a routerLink="/room">
-          <li>
-            ZSET TEAM
-          </li>
-        </a>
-        <a routerLink="/room">
-          <li>
-            Lebioda
-          </li>
-        </a>
-        <a routerLink="/room">
-          <li>
-            MarcinRajan
-          </li>
-        </a>
-        <a routerLink="/room">
-          <li>
-            BiałyStockTeam
-          </li>
-        </a>
-        <a routerLink="/room">
-          <li>
-            DobreWariatyTeam
-          </li>
-        </a>
-        <a routerLink="/room">
-          <li>
-            dawda
-          </li>
-        </a>
-        <a routerLink="/room">
-          <li>
-            dawda
-          </li>
-        </a>
-        <a routerLink="/room">
-          <li>
-            dawda
-          </li>
-        </a>
-        <a routerLink="/room">
-          <li>
-            dawda
-          </li>
-        </a>
-        <a routerLink="/room">
-          <li>
-            dawda
-          </li>
-        </a>
-        <a routerLink="/room">
-          <li>
-            dawda
-          </li>
-        </a>
-
-
-      </ul>
-
-    </div>
-
+    <ul style="list-style-type: none">
+      <div class="room-list" *ngFor="let room of rooms">
+          <a [routerLink]="['/room', room.id]">
+            <li>{{room.name}}</li>
+          </a>
+      </div>
+    </ul>
   </div>
 
   <div class="dropdown">
-    <button onclick="myFunction()" id="myBtn" class="dropbtn">Stwórz pokój</button>
+    <button *ngIf="loggedIn" onclick="myFunction()" id="myBtn" class="dropbtn">Stwórz pokój</button>
     <div id="myDropdown" class="dropdown-content"><br>
       <form>
-        <input type="text" id="room-name" placeholder="Nazwa pokoju" autocomplete="off"><br><br>
-        <input type="submit" value="Stwórz">
+        <input type="text" id="room-name" placeholder="Nazwa pokoju" autocomplete="off" [(ngModel)]="roomName" [ngModelOptions]="{standalone: true}"><br><br>
+        <input type="submit" value="Stwórz" (click)="createRoom()">
       </form>
     </div>
   </div>

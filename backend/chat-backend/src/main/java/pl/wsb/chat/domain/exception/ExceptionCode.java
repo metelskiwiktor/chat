@@ -3,10 +3,11 @@ package pl.wsb.chat.domain.exception;
 public enum ExceptionCode {
     NO_SUCH_ROOM("C_001", "Brak pokoju o id '%s'.", 404),
     ROOM_ALREADY_EXISTS("C_002", "Pokój o nazwie '%s' już istnieje.", 400),
-    NO_SUCH_USER("C_004", "Brak użytkownika o id '%s'.", 404),
-    NO_SUCH_MESSAGE("C_005", "Brak wiadomości o id '%s'.", 404),
-    USER_ALREADY_EXISTS("C_006", "Nazwa użytkownika '%s' jest zajęta.", 400),
-    FIELD_IS_TOO_SHORT("C_007", "Zawartość pola '%s' jest za krótka.", 400);
+    NO_SUCH_USER_ID("C_004", "Brak użytkownika o id '%s'.", 404),
+    NO_SUCH_USER_LOGIN("C_005", "Brak użytkownika o loginie '%s'.", 404),
+    NO_SUCH_MESSAGE("C_006", "Brak wiadomości o id '%s'.", 404),
+    USER_ALREADY_EXISTS("C_007", "Nazwa użytkownika '%s' jest zajęta.", 400),
+    FIELD_IS_TOO_SHORT("C_008", "Zawartość pola '%s' jest za krótka.", 400);
 
     private final String code;
     private final String message;

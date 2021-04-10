@@ -20,13 +20,13 @@ public class PrincipalInformation {
 
     public String getUserId() {
         return userRepository.findByLogin(getUsername())
-                .orElseThrow(() -> new DomainException(ExceptionCode.NO_SUCH_USER, getUsername()))
+                .orElseThrow(() -> new DomainException(ExceptionCode.NO_SUCH_USER_ID, getUsername()))
                 .getId();
     }
 
     public String getUserId(String login) {
         return userRepository.findByLogin(login)
-                .orElseThrow(() -> new DomainException(ExceptionCode.NO_SUCH_USER, getUsername()))
+                .orElseThrow(() -> new DomainException(ExceptionCode.NO_SUCH_USER_ID, getUsername()))
                 .getId();
     }
 }

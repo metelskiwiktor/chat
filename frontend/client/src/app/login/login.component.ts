@@ -1,7 +1,7 @@
 import {Component, NgZone, OnInit} from '@angular/core';
 import {AppComponent} from '../app.component';
 import {LoginModel} from '../../model/LoginModel';
-import {HttpMockService} from '../http-mock.service';
+import {HttpService} from '../http.service';
 import {Router} from '@angular/router';
 
 @Component({
@@ -13,10 +13,13 @@ export class LoginComponent implements OnInit {
   username: string;
   password: string;
 
-  constructor(private app: AppComponent, private httpMock: HttpMockService, private router: Router, private ngZone: NgZone) {
+  constructor(private app: AppComponent, private httpService: HttpService, private router: Router, private ngZone: NgZone) {
   }
 
   ngOnInit(): void {
+    if (this.httpService.isLoggedIn()) {
+      this.ngZone.run(() => this.router.navigate(['/']));
+    }
     this.app.setTitle('Logowanie');
   }
 
@@ -25,8 +28,9 @@ export class LoginComponent implements OnInit {
     loginModel.login = this.username;
     loginModel.password = this.password;
 
-    this.httpMock.login(loginModel).toPromise().then(resp => {
-      alert('Pomyslnie zalogowano, token: ' + resp.token);
+    this.httpService.login(loginModel).toPromise().then(resp => {
+      this.httpService.storeJwt('Bearer ' + resp.token);
+      this.httpService.getRole();
       this.ngZone.run(() => this.router.navigate(['/']));
     }).catch(() => {
       alert('Niepoprawny login bądź hasło');

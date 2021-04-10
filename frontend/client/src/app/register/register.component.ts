@@ -1,7 +1,7 @@
 import {Component, NgZone, OnInit} from '@angular/core';
 import {AppComponent} from '../app.component';
 import {LoginModel} from '../../model/LoginModel';
-import {HttpMockService} from '../http-mock.service';
+import {HttpService} from '../http.service';
 import {Router} from '@angular/router';
 
 @Component({
@@ -14,11 +14,14 @@ export class RegisterComponent implements OnInit {
   password1: string;
   password2: string;
 
-  constructor(private app: AppComponent, private httpMock: HttpMockService, private router: Router, private ngZone: NgZone) {
+  constructor(private app: AppComponent, private httpService: HttpService, private router: Router, private ngZone: NgZone) {
   }
 
   ngOnInit(): void {
     this.app.setTitle('Rejestracja');
+    if (this.httpService.isLoggedIn()) {
+      this.ngZone.run(() => this.router.navigate(['/']));
+    }
   }
 
   register() {
@@ -31,7 +34,7 @@ export class RegisterComponent implements OnInit {
     registerModel.login = this.username;
     registerModel.password = this.password1;
 
-    this.httpMock.register(registerModel).toPromise().then(() => {
+    this.httpService.register(registerModel).toPromise().then(() => {
       alert('Pomyślnie zarejestrowano');
       this.ngZone.run(() => this.router.navigate(['/login']));
     }).catch(reason => {

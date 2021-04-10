@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import pl.wsb.chat.domain.user.User;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Document
 public class PrivateMessage {
@@ -29,39 +30,32 @@ public class PrivateMessage {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public User getFrom() {
         return from;
-    }
-
-    public void setFrom(User from) {
-        this.from = from;
     }
 
     public User getTo() {
         return to;
     }
 
-    public void setTo(User to) {
-        this.to = to;
-    }
-
     public String getMessage() {
         return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PrivateMessage that = (PrivateMessage) o;
+        return Objects.equals(id, that.id) && Objects.equals(from, that.from) && Objects.equals(to, that.to) && Objects.equals(message, that.message) && Objects.equals(createdAt, that.createdAt);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, from, to, message, createdAt);
     }
 }

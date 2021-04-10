@@ -24,51 +24,19 @@ public class RoomMessage {
         this.author = author;
     }
 
-    public RoomMessage(String note, LocalDateTime createdAt, User author) {
-        this.note = note;
-        this.createdAt = createdAt;
-        this.author = author;
-    }
-
     public String getId() {
         return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getNote() {
         return note;
     }
 
-    public void setNote(String note) {
-        this.note = note;
-    }
-
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
     public User getAuthor() {
         return author;
-    }
-
-    public void setAuthor(User author) {
-        this.author = author;
-    }
-
-    @Override
-    public String toString() {
-        return "RoomMessage{" +
-                "id='" + id + '\'' +
-                ", note='" + note + '\'' +
-                ", createdAt=" + createdAt +
-                ", author=" + author +
-                '}';
     }
 }

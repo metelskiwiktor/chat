@@ -15,12 +15,6 @@ public class Room {
     public Room() {
     }
 
-    public Room(String id, String name, List<RoomMessage> messages) {
-        this.id = id;
-        this.name = name;
-        this.messages = messages;
-    }
-
     public Room(String name, List<RoomMessage> messages) {
         this.name = name;
         this.messages = messages;
@@ -30,16 +24,8 @@ public class Room {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public List<RoomMessage> getMessages() {
@@ -48,14 +34,5 @@ public class Room {
 
     public void setMessages(List<RoomMessage> messages) {
         this.messages = messages;
-    }
-
-    @Override
-    public String toString() {
-        return "Room{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", messages=" + messages +
-                '}';
     }
 }

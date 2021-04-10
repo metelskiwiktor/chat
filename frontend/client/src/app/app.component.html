@@ -3,17 +3,20 @@
       <li class="li-menu">
         <a routerLink="/rooms" class="a-menu" role="button">Pokoje</a>
       </li>
-      <li class="li-menu">
+      <li class="li-menu" *ngIf="httpService.isLoggedIn()">
         <a routerLink="/private-messages" class="a-menu" role="button">Prywatne wiadomości</a>
       </li>
-      <li class="li-menu">
+      <li class="li-menu" *ngIf="!httpService.isLoggedIn()">
         <a routerLink="/login" class="a-menu" role="button">Logowanie</a>
       </li>
-      <li class="li-menu">
+      <li class="li-menu" *ngIf="!httpService.isLoggedIn()">
         <a routerLink="/register" class="a-menu" role="button">Rejestracja</a>
       </li>
-      <li class="li-menu" style="float: right">
-        <a routerLink="/profile" class="a-menu active" role="button">Profil</a>
+      <li class="li-menu" style="float: right" *ngIf="httpService.isLoggedIn()">
+        <a [routerLink]="['/profile', httpService.getUsername()]" class="a-menu active" role="button">Profil</a>
+      </li>
+      <li class="li-menu" style="float: right" *ngIf="httpService.isLoggedIn()">
+        <a routerLink="/logout" class="a-menu" role="button">Wyloguj</a>
       </li>
     </ul>
   <router-outlet></router-outlet>

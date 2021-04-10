@@ -7,6 +7,7 @@ import pl.wsb.chat.api.dto.response.RoomMessageView;
 import pl.wsb.chat.api.dto.response.RoomView;
 import pl.wsb.chat.domain.room.RoomService;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -31,6 +32,11 @@ public class RoomController {
     @GetMapping("/{room-id}")
     public List<RoomMessageView> getMessages(@PathVariable("room-id") String roomId) {
         return roomService.getMessages(roomId);
+    }
+
+    @GetMapping("/all-rooms")
+    public List<RoomView> getRooms() {
+        return roomService.getRooms();
     }
 
     @DeleteMapping

@@ -1,28 +1,39 @@
 package pl.wsb.chat.domain.user;
 
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.wsb.chat.api.dto.request.RegisterUserRequest;
+import pl.wsb.chat.api.dto.response.UserProfileView;
 import pl.wsb.chat.domain.exception.DomainException;
 import pl.wsb.chat.domain.exception.ExceptionCode;
+import pl.wsb.chat.domain.room.RoomService;
 import pl.wsb.chat.lib.Assertion;
 
 import java.util.Collections;
+import java.util.Set;
 
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final RoomService roomService;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, @Lazy RoomService roomService) {
         this.userRepository = userRepository;
+        this.roomService = roomService;
     }
 
     public User getById(String userId) {
         return userRepository.findById(userId)
-                .orElseThrow(() -> new DomainException(ExceptionCode.NO_SUCH_USER, userId));
+                .orElseThrow(() -> new DomainException(ExceptionCode.NO_SUCH_USER_ID, userId));
     }
 
-    public void register(RegisterUserRequest registerUserRequest) {
+    public User getByUsername(String username) {
+        return userRepository.findByLogin(username)
+                .orElseThrow(() -> new DomainException(ExceptionCode.NO_SUCH_USER_LOGIN, username));
+    }
+
+    public void register(RegisterUserRequest registerUserRequest, Set<Role> roles) {
         if (userRepository.existsByLogin(registerUserRequest.getLogin())) {
             throw new DomainException(ExceptionCode.USER_ALREADY_EXISTS, registerUserRequest.getLogin());
         }
@@ -34,10 +45,16 @@ public class UserService {
         User user = new User(
                 registerUserRequest.getLogin(),
                 hashedPassword,
-                Collections.singleton(Role.STANDARD)
+                roles
         );
 
         userRepository.save(user);
+    }
+
+    public UserProfileView getUserProfile(String userName) {
+        User user = getByUsername(userName);
+        int roomMessages = roomService.countMessagesByUser(user);
+        return new UserProfileView(user.getId(), user.getLogin(), roomMessages);
     }
 
     private static class Validator {

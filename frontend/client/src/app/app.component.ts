@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {Title} from '@angular/platform-browser';
+import {HttpService} from './http.service';
 
 @Component({
   selector: 'app-root',
@@ -7,7 +8,8 @@ import {Title} from '@angular/platform-browser';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor(private titleService: Title) {
+
+  constructor(private titleService: Title, public httpService: HttpService) {
     this.setTitle('Chat');
   }
 

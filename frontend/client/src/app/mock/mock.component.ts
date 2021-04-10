@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {HttpMockService} from '../http-mock.service';
+import {HttpService} from '../http.service';
 
 @Component({
   selector: 'app-mock',
@@ -10,7 +10,7 @@ import {HttpMockService} from '../http-mock.service';
 export class MockComponent implements OnInit {
   date = '';
 
-  constructor(private httpMock: HttpMockService) {
+  constructor(private httpService: HttpService) {
   }
 
   ngOnInit(): void {
@@ -18,7 +18,7 @@ export class MockComponent implements OnInit {
   }
 
   initMockDate() {
-    this.httpMock.getMockDate().subscribe(value => {
+    this.httpService.getMockDate().subscribe(value => {
       this.date = value;
     });
   }

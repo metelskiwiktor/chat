@@ -18,6 +18,7 @@ import org.springframework.web.context.WebApplicationContext;
 import pl.wsb.chat.domain.room.Room;
 import pl.wsb.chat.domain.room.RoomMessage;
 import pl.wsb.chat.domain.room.RoomRepository;
+import pl.wsb.chat.domain.user.Role;
 import pl.wsb.chat.domain.user.UserRepository;
 import pl.wsb.chat.security.UserPrincipalAuth;
 
@@ -238,7 +239,7 @@ public class RoomControllerIntegrationTest {
     }
 
     @Test
-    void deleteMessageRoomRequestShouldDeleteMessageRoomFromDatabase() throws Exception {
+    void deleteMessageRoomRequestShouldDeleteMessageRoomWithModeratorRole() throws Exception {
         //GIVEN
         Room room = createRoom();
         int expectedStatus = HttpStatus.OK.value();
@@ -253,7 +254,7 @@ public class RoomControllerIntegrationTest {
                 .getId();
 
         //WHEN
-        int actualStatus = deleteMessageRoomRequest(messageId).getResponse().getStatus();
+        int actualStatus = deleteMessageRoomRequest(messageId, Role.MODERATOR).getResponse().getStatus();
         boolean existMessage = roomRepository.findById(room.getId())
                 .orElseThrow(RuntimeException::new)
                 .getMessages().stream()
@@ -265,13 +266,40 @@ public class RoomControllerIntegrationTest {
     }
 
     @Test
+    void deleteMessageRoomRequestShouldNotDeleteMessageRoomWithStandardRole() throws Exception {
+        //GIVEN
+        Room room = createRoom();
+        int expectedStatus = HttpStatus.FORBIDDEN.value();
+        String message = "message note 1";
+        addMessageToRoomRequest(room.getId(), message);
+        String messageId = roomRepository.findById(room.getId())
+                .orElseThrow(RuntimeException::new)
+                .getMessages().stream()
+                .filter(rm -> rm.getNote().equals(message))
+                .findFirst()
+                .orElseThrow(RuntimeException::new)
+                .getId();
+
+        //WHEN
+        int actualStatus = deleteMessageRoomRequest(messageId, Role.STANDARD).getResponse().getStatus();
+        boolean existMessage = roomRepository.findById(room.getId())
+                .orElseThrow(RuntimeException::new)
+                .getMessages().stream()
+                .anyMatch(rm -> rm.getNote().equals(message));
+
+        //THEN
+        assertEquals(expectedStatus, actualStatus);
+        assertTrue(existMessage);
+    }
+
+    @Test
     void deleteMessageWithInvalidMessageIdShouldReturnNotFound() throws Exception {
         //GIVEN
         String invalidMessageId = "invalid message id";
         int expectedStatus = HttpStatus.NOT_FOUND.value();
 
         //WHEN
-        int actualStatus = deleteMessageRoomRequest(invalidMessageId).getResponse().getStatus();
+        int actualStatus = deleteMessageRoomRequest(invalidMessageId, Role.MODERATOR).getResponse().getStatus();
 
         //THEN
         assertEquals(expectedStatus, actualStatus);
@@ -290,7 +318,7 @@ public class RoomControllerIntegrationTest {
         return mockMvc.perform
                 (MockMvcRequestBuilders
                         .post(ENDPOINT_CREATE_ROOM)
-                        .header("Authorization", userPrincipalAuth.getJWT())
+                        .header("Authorization", userPrincipalAuth.getAuth().getJwt())
                         .content(roomName))
                 .andReturn();
     }
@@ -299,7 +327,7 @@ public class RoomControllerIntegrationTest {
         return mockMvc.perform
                 (MockMvcRequestBuilders
                         .post(ENDPOINT_ADD_MESSAGE + "/" + roomId)
-                        .header("Authorization", userPrincipalAuth.getJWT())
+                        .header("Authorization", userPrincipalAuth.getAuth().getJwt())
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content(message))
                 .andReturn();
@@ -310,11 +338,11 @@ public class RoomControllerIntegrationTest {
                 .andReturn();
     }
 
-    private MvcResult deleteMessageRoomRequest(String messageId) throws Exception {
+    private MvcResult deleteMessageRoomRequest(String messageId, Role userRole) throws Exception {
         return mockMvc.perform
                 (MockMvcRequestBuilders
                         .delete(ENDPOINT_DELETE_ROOM_MESSAGE)
-                        .header("Authorization", userPrincipalAuth.getJWT())
+                        .header("Authorization", userPrincipalAuth.getAuth(userRole).getJwt())
                         .param("message-id", messageId))
                 .andReturn();
     }

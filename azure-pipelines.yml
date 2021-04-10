@@ -1,0 +1,23 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: windows-latest
+
+steps:
+- task: JMeterInstaller@0
+  inputs:
+    jmeterVersion: '5.2.1'
+    plugins: 'jpgc-casutg,jpgc-dummy,jpgc-ffw,jpgc-fifo,jpgc-functions,jpgc-json,jpgc-perfmon,jpgc-prmctl,jpgc-tst,jmeter.backendlistener.azure'
+- task: CmdLine@2
+  inputs:
+    script: 'jmeter -n -t jmeter.jmx -l report/result.jtl -e -o report'
+- task: publishhtmlreport@1
+  inputs:
+    htmlType: 'Jmeter'
+    JmeterReportsPath: '$(Build.SourcesDirectory)/report'

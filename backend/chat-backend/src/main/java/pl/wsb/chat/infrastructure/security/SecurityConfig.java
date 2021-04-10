@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -15,7 +16,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import pl.wsb.chat.domain.user.Role;
 
 @Configuration
-@EnableWebSecurity()
+@EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final RestAuthenticationSuccessHandler authenticationSuccessHandler;
@@ -41,11 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/", "/mock", "/message/room/*").permitAll()
-                .antMatchers(HttpMethod.POST, "/users/register").permitAll()
-                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .antMatchers(HttpMethod.DELETE, "/message/*").hasRole(Role.MODERATOR.name())
-                .antMatchers("/login").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -55,6 +52,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilter(authenticationFilter())
                 .exceptionHandling()
                 .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));
+    }
+
+    @Override
+    public void configure(WebSecurity web) {
+        web.ignoring()
+                .antMatchers(HttpMethod.GET, "/", "/actuator/**", "/users/*", "/mock", "/message/room/*")
+                .antMatchers(HttpMethod.POST, "/login","/users/register")
+                .antMatchers(HttpMethod.OPTIONS, "/**");
     }
 
     @Bean
