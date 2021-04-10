@@ -21,3 +21,12 @@ steps:
   inputs:
     htmlType: 'Jmeter'
     JmeterReportsPath: '$(Build.SourcesDirectory)/report'
+- task: PublishPipelineArtifact@1
+  inputs:
+    targetPath: '$(Pipeline.Workspace)'
+    publishLocation: 'pipeline'
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
