@@ -8,9 +8,9 @@ import {Router} from '@angular/router';
   providedIn: 'root'
 })
 export class HttpService {
-  private baseUrl = 'http://localhost:8080';
+  // private baseUrl = 'http://localhost:8080';
 
-  // private baseUrl = 'https://chat-wm-api.azurewebsites.net';
+  private baseUrl = 'https://chat-wm-api.azurewebsites.net';
 
   constructor(private http: HttpClient, private router: Router, private ngZone: NgZone) {
   }
